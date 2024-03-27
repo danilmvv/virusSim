@@ -105,11 +105,14 @@ class ParametersViewController: UIViewController {
     }
     
     @objc func startCalculation() {
+        // Валидация
         guard let numberOfPeopleText = numberOfPeopleTextField.text,
               let infectionFactorText = infectionFactorTextField.text,
               let recalculationPeriodText = recalculationPeriodTextField.text,
               let numberOfPeople = Int(numberOfPeopleText),
+              numberOfPeople > 0,
               let infectionFactor = Int(infectionFactorText),
+              infectionFactor >= 0,
               let recalculationPeriod = Int(recalculationPeriodText) else {
             showAlert(message: "Введите верные параметры.")
             return

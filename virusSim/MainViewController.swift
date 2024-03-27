@@ -48,6 +48,7 @@ class MainViewController: UIViewController {
         timer = nil
     }
     
+    // Header UI
     func setupHeader() {
         let counterContainer = UIView()
         counterContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +84,7 @@ class MainViewController: UIViewController {
         updateCounterLabels()
     }
     
+    // Жесты
     func setupPinchGestureRecognizer() {
         pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         collectionView.addGestureRecognizer(pinchGestureRecognizer)
@@ -104,6 +106,7 @@ class MainViewController: UIViewController {
         }
     }
     
+    // CollectionView UI
     func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: personSize, height: personSize)
@@ -137,10 +140,15 @@ class MainViewController: UIViewController {
             var newPeopleStatus = self.peopleStatus
             
             for i in 0..<self.numberOfPeople {
+                
+                // Проверяем заражен ли человек
                 if self.peopleStatus[i] {
+                    // Случайное кол-во от 0 до infectionFactor зараженных этим человеком
                     let randomInfectionCount = Int.random(in: 0...self.infectionFactor)
                     
                     var infections = 0
+                    
+                    // Заражаем randomInfectionCount людей на случайных индексах
                     while infections < randomInfectionCount {
                         let randomIndex = Int.random(in: 0..<self.numberOfPeople)
                         if randomIndex == i {
@@ -153,8 +161,8 @@ class MainViewController: UIViewController {
                 }
             }
             
+            // Обновляем данные и view
             self.peopleStatus = newPeopleStatus
-            
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
                 self.updateCounterLabels()
